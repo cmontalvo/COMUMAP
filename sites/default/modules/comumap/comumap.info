@@ -1,0 +1,6 @@
+name = COMUMAP
+description = "COMUMAP custom module"
+package = "COMUMAP"
+core = "7.x"
+
+scripts[] = comumap.js

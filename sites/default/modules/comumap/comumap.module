@@ -1,0 +1,41 @@
+<?php
+/**
+ * Hook Menu
+ */
+function comumap_menu() {
+  $items = array();
+  
+  // A menu callback is required when using ajax outside of the Form API.
+  $items['comumap_callback'] = array(
+    'page callback' => '_comumap_callback_responce',
+    'access callback' => 'user_access',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  
+  return $items;
+}
+
+function _comumap_callback_responce($type = 'ajax') {
+  if ($type == 'ajax') {
+    //Get Node
+    $node_id = str_replace('node/', '', drupal_lookup_path('source', $_GET['url'], null));
+    $node = node_load($node_id);
+    
+    $output = $node->body[$node->language][0]['value'];
+    $commands = array();
+    // See ajax_example_advanced.inc for more details on the available commands
+    // and how to use them.
+    $selector = '#main';
+    $commands[] = ajax_command_replace($selector, $output);
+    $page = array('#type' => 'ajax', '#commands' => $commands);
+    ajax_deliver($page);
+  }
+  //return 'hola';
+}
+
+function _comumap_get_content($url) {
+  $html = array();
+  
+  return implode(PHP_EOL, $html);
+}
