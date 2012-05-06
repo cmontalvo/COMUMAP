@@ -18,20 +18,20 @@ function comumap_menu() {
 
 function _comumap_callback_responce($type = 'ajax') {
   if ($type == 'ajax') {
-    //Get Node
-    $node_id = str_replace('node/', '', drupal_lookup_path('source', $_GET['url'], null));
-    $node = node_load($node_id);
-    
-    $output = $node->body[$node->language][0]['value'];
-    $commands = array();
-    // See ajax_example_advanced.inc for more details on the available commands
-    // and how to use them.
+    //Set selector to update
     $selector = '#main';
+    //Get Node Id from parameters
+    $node_id = str_replace('node/', '', drupal_lookup_path('source', $_GET['url'], null));
+    //Load Node
+    $node = node_load($node_id);
+    //Get node body
+    $output = $node->body[$node->language][0]['value'];
+    //Ajax commands
+    $commands = array();
     $commands[] = ajax_command_replace($selector, $output);
     $page = array('#type' => 'ajax', '#commands' => $commands);
     ajax_deliver($page);
   }
-  //return 'hola';
 }
 
 function _comumap_get_content($url) {
